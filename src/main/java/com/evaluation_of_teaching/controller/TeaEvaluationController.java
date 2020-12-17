@@ -1,6 +1,7 @@
 package com.evaluation_of_teaching.controller;
 
 import com.evaluation_of_teaching.model.TeaEvaluationEntity;
+import com.evaluation_of_teaching.model.TeacherEntity;
 import com.evaluation_of_teaching.service.TeaEvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +18,13 @@ public class TeaEvaluationController {
     TeaEvaluationService teaEvaluationService;
 
     @RequestMapping(path = "/getTeaEvaluations",method = RequestMethod.GET)
-    List<TeaEvaluationEntity> getTeaEvaList(String userId){
+    public List<TeaEvaluationEntity> getTeaEvaList(int userId){
         return teaEvaluationService.getTeaEvaList(userId);
+    }
+
+    @RequestMapping(path = "/queryTeaEva",method = RequestMethod.GET)
+    public TeacherEntity queryTeaEva(int id1, int id2){
+        return teaEvaluationService.queryTeaEva(id1,id2);
     }
 
     @RequestMapping(path = "/addTeaEvaluation",method = RequestMethod.POST)

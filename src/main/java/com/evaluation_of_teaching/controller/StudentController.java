@@ -20,9 +20,9 @@ public class StudentController {
     StudentService studentService;
 
     @RequestMapping(path = "/getStudents",method = RequestMethod.GET)//POST不行
-    public List<StudentEntity> getStudents(){
+    public List<StudentEntity> getStudents(int currentPage){
         System.out.println("所有学生");
-        return studentService.getStudents();
+        return studentService.getStudents(currentPage);
     }
 
     @RequestMapping(path = "/addStudent",method = RequestMethod.POST)
@@ -36,7 +36,7 @@ public class StudentController {
     }
 
     @RequestMapping(path = "/deleteStudent",method = RequestMethod.DELETE)
-    public int deleteStudent(StudentEntity studentEntity){
-        return studentService.deleteStudent(studentEntity);
+    public int deleteStudent(int userId){
+        return studentService.deleteStudent(userId);
     }
 }

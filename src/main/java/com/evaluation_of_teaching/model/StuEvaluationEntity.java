@@ -16,6 +16,7 @@ public class StuEvaluationEntity {
     private Integer stu_evaluation_id;
     private Integer student_id;
     private Integer teacher_id;
+    private Integer course_id;
     private Integer str1;
     private Integer str2;
     private Integer str3;

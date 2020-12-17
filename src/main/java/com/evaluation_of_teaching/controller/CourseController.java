@@ -17,9 +17,9 @@ public class CourseController {
     CourseService courseService;
 
     @RequestMapping(path = "/getCourses")
-    public List<CourseEntity> getCourses(){
+    public List<CourseEntity> getCourses(int currentPage){
         System.out.println("所有课程");
-        return courseService.getCourses();
+        return courseService.getCourses(currentPage);
     }
 
     @RequestMapping(path = "/addCourse",method = RequestMethod.POST)
@@ -33,7 +33,7 @@ public class CourseController {
     }
 
     @RequestMapping(path = "/deleteCourse",method = RequestMethod.DELETE)
-    public int deleteCourse(CourseEntity course){
-        return courseService.deleteCourse(course);
+    public int deleteCourse(int courseId){
+        return courseService.deleteCourse(courseId);
     }
 }

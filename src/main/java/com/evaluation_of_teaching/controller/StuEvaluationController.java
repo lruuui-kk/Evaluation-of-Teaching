@@ -1,5 +1,6 @@
 package com.evaluation_of_teaching.controller;
 
+import com.evaluation_of_teaching.dto.courseTeacherDto;
 import com.evaluation_of_teaching.model.StuEvaluationEntity;
 import com.evaluation_of_teaching.service.StuEvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,13 @@ public class StuEvaluationController {
     StuEvaluationService stuEvaluationService;
 
     @RequestMapping(path = "/getStuEvaluations",method = RequestMethod.GET)
-    public List<StuEvaluationEntity> getStuEvaList(String userId){
+    public List<StuEvaluationEntity> getStuEvaList(int userId){
         return stuEvaluationService.getStuEvaList(userId);
+    }
+
+    @RequestMapping(path = "/queryStuEva",method = RequestMethod.GET)
+    public courseTeacherDto queryStuEva(int userId, int courseId){
+        return stuEvaluationService.queryStuEva(userId,courseId);
     }
 
     @RequestMapping(path = "/addStuEvaluation",method = RequestMethod.POST)

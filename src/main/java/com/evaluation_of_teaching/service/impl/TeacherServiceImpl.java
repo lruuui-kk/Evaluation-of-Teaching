@@ -3,6 +3,7 @@ package com.evaluation_of_teaching.service.impl;
 import com.evaluation_of_teaching.dao.TeacherMapper;
 import com.evaluation_of_teaching.model.TeacherEntity;
 import com.evaluation_of_teaching.service.TeacherService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +13,9 @@ public class TeacherServiceImpl implements TeacherService {
     @Autowired
     TeacherMapper teacherMapper;
 
-    public List<TeacherEntity> getTeachers() {
-        return teacherMapper.selectAll();
+    public List<TeacherEntity> getTeachers(int currentPage) {
+        RowBounds rowBounds =new RowBounds((currentPage-1)*10,10);
+        return teacherMapper.selectByRowBounds(null,rowBounds);
     }
 
     public int addTeacher(TeacherEntity teacher) {
@@ -24,7 +26,7 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.updateByPrimaryKeySelective(teacher);
     }
 
-    public int deleteTeacher(TeacherEntity teacher) {
-        return teacherMapper.delete(teacher);
+    public int deleteTeacher(int userId) {
+        return teacherMapper.deleteByPrimaryKey(userId);
     }
 }

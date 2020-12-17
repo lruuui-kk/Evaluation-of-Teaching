@@ -8,11 +8,11 @@ import java.util.List;
 @Repository
 public interface StudentService {
 
-    List<StudentEntity> getStudents();
+    List<StudentEntity> getStudents(int currentPage);
 
     int addStudent(StudentEntity student);
 
     int updateStudent(StudentEntity student);
 
-    int deleteStudent(StudentEntity student);
+    int deleteStudent(int userId);
 }

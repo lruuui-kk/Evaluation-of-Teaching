@@ -13,11 +13,7 @@ class EvaluationOfTeachingApplicationTests {
 
     @Test
     void contextLoads() {
-        ChooseClassService chooseClassService = new ChooseClassServiceImpl();
-        List<StudentEntity> list = chooseClassService.queryChooseListByUser("1");
-        for (StudentEntity student : list) {
-            System.out.println(student);
-        }
+
     }
 
 }

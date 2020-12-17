@@ -14,20 +14,20 @@ import java.util.List;
 public class ChooseClassController {
 
     @Autowired
-    ChooseClassService service;
+    ChooseClassService chooseClassService;
 
     @RequestMapping(path = "/queryChoose")
-    public List<StudentEntity> queryChooseListByUser(String userId){
-        return service.queryChooseListByUser(userId);
+    public List<StudentEntity> queryChooseListByUser(int userId){
+        return chooseClassService.queryChooseListByUser(userId);
     }
 
     @RequestMapping(path = "/addChoose",method = RequestMethod.POST)
-    public int addChooseClass(String userId,String courseId){
-        return service.addChooseClass(userId,courseId);
+    public int addChooseClass(int userId,int courseId){
+        return chooseClassService.addChooseClass(userId,courseId);
     }
 
     @RequestMapping(path = "/deleteChoose",method = RequestMethod.DELETE)
-    int deleteChooseClass(String userId,String courseId){
-        return service.deleteChooseClass(userId,courseId);
+    public int deleteChooseClass(int userId,int courseId){
+        return chooseClassService.deleteChooseClass(userId,courseId);
     }
 }

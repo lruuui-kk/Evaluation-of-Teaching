@@ -15,6 +15,6 @@ public class ChooseClassEntity {
 
     @Id
     private Integer choose_class_id;
-    private String student_id;
-    private String course_id;
+    private Integer student_id;
+    private Integer course_id;
 }

@@ -17,9 +17,9 @@ public class TeacherController {
     TeacherService teacherService;
 
     @RequestMapping(path = "/getTeachers")
-    public List<TeacherEntity> getTeachers(){
+    public List<TeacherEntity> getTeachers(int currentPage){
         System.out.println("所有老师");
-        return teacherService.getTeachers();
+        return teacherService.getTeachers(currentPage);
     }
 
     @RequestMapping(path = "/addTeacher",method = RequestMethod.POST)
@@ -33,8 +33,8 @@ public class TeacherController {
     }
 
     @RequestMapping(path = "/deleteTeacher",method = RequestMethod.DELETE)
-    public int deleteTeacher(TeacherEntity teacher){
-        return teacherService.deleteTeacher(teacher);
+    public int deleteTeacher(int userId){
+        return teacherService.deleteTeacher(userId);
     }
 
 }

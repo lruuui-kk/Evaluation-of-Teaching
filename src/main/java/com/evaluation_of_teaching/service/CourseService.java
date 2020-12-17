@@ -8,11 +8,11 @@ import java.util.List;
 @Repository
 public interface CourseService {
 
-    List<CourseEntity> getCourses();
+    List<CourseEntity> getCourses(int currentPage);
 
     int addCourse(CourseEntity course);
 
     int updateCourse(CourseEntity Course);
 
-    int deleteCourse(CourseEntity Course);
+    int deleteCourse(int courseId);
 }

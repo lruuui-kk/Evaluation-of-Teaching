@@ -7,11 +7,11 @@ import java.util.List;
 
 @Repository
 public interface TeacherService {
-    List<TeacherEntity> getTeachers();
+    List<TeacherEntity> getTeachers(int currentPage);
 
     int addTeacher(TeacherEntity teacher);
 
     int updateTeacher(TeacherEntity teacher);
 
-    int deleteTeacher(TeacherEntity teacher);
+    int deleteTeacher(int userId);
 }

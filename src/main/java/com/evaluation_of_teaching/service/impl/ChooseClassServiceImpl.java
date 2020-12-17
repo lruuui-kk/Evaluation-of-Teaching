@@ -15,20 +15,18 @@ public class ChooseClassServiceImpl implements ChooseClassService {
     @Autowired
     ChooseClassMapper chooseClassMapper;
 
-    public List<StudentEntity> queryChooseListByUser(String userId) {
-        List<StudentEntity> list = chooseClassMapper.queryChooseListByUser(userId);
-
-        return list;
+    public List<StudentEntity> queryChooseListByUser(int userId) {
+        return chooseClassMapper.queryChooseListByUser(userId);
     }
 
-    public int addChooseClass(String userId, String courseId) {
+    public int addChooseClass(int userId, int courseId) {
         ChooseClassEntity entity =new ChooseClassEntity();
         entity.setStudent_id(userId);
         entity.setCourse_id(courseId);
         return chooseClassMapper.insert(entity);
     }
 
-    public int deleteChooseClass(String userId, String courseId) {
+    public int deleteChooseClass(int userId, int courseId) {
         return chooseClassMapper.deleteChooseClass(userId,courseId);
     }
 }

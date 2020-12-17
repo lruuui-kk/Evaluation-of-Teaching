@@ -9,9 +9,9 @@ import java.util.List;
 @Repository
 public interface ChooseClassService {
 
-    List<StudentEntity> queryChooseListByUser(String userId);
+    List<StudentEntity> queryChooseListByUser(int userId);
 
-    int addChooseClass(String userId,String courseId);
+    int addChooseClass(int userId,int courseId);
 
-    int deleteChooseClass(String userId,String courseId);
+    int deleteChooseClass(int userId,int courseId);
 }

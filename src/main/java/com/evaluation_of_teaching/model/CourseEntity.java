@@ -20,5 +20,5 @@ public class CourseEntity {
     private Date end_time;
     private String place;
     private Integer num;
-    private String teacher_id;
+    private Integer teacher_id;
 }

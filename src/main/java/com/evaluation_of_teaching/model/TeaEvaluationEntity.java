@@ -14,8 +14,8 @@ import javax.persistence.Table;
 public class TeaEvaluationEntity {
     @Id
     private Integer t_evaluation_id;
-    private String teacher_id1;
-    private String teacher_id2;
+    private Integer teacher_id1;//评价者
+    private Integer teacher_id2;//被评价者
     private Integer str1;
     private Integer str2;
     private Integer str3;

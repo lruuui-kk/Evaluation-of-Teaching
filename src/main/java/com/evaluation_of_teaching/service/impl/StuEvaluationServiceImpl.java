@@ -51,6 +51,14 @@ public class StuEvaluationServiceImpl implements StuEvaluationService {
     }
 
     public int addStuEva(StuEvaluationEntity stuEvaluation) {
+        stuEvaluation.setSum(
+                stuEvaluation.getStr1()+
+                stuEvaluation.getStr2()+
+                stuEvaluation.getStr3()+
+                stuEvaluation.getStr4()+
+                stuEvaluation.getStr5()+
+                stuEvaluation.getStr6()
+        );
         return stuEvaluationMapper.insert(stuEvaluation);
     }
 }

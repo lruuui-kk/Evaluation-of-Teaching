@@ -44,6 +44,14 @@ public class TeaEvaluationServiceImpl implements TeaEvaluationService {
     }
 
     public int addTeaEva(TeaEvaluationEntity teaEvaluation) {
+        teaEvaluation.setSum(
+                teaEvaluation.getStr1()+
+                teaEvaluation.getStr2()+
+                teaEvaluation.getStr3()+
+                teaEvaluation.getStr4()+
+                teaEvaluation.getStr5()+
+                teaEvaluation.getStr6()
+        );
         return teaEvaluationMapper.insert(teaEvaluation);
     }
 }

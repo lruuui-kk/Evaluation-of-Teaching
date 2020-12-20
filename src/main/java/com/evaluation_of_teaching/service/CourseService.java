@@ -10,6 +10,8 @@ public interface CourseService {
 
     List<CourseEntity> getCourses(int currentPage);
 
+    List<CourseEntity> getCourseByDpet(String dept, int currentPage);
+
     int addCourse(CourseEntity course);
 
     int updateCourse(CourseEntity Course);

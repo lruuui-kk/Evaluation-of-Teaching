@@ -22,6 +22,11 @@ public class CourseController {
         return courseService.getCourses(currentPage);
     }
 
+    @RequestMapping(path = "/getCourseByDept")
+    public List<CourseEntity> getCourseByDpet(String dept, int currentPage){
+        return courseService.getCourseByDpet(dept,currentPage);
+    }
+
     @RequestMapping(path = "/addCourse",method = RequestMethod.POST)
     public int addCourse(CourseEntity course){
         return courseService.addCourse(course);

@@ -6,6 +6,7 @@ import com.evaluation_of_teaching.service.StudentService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 @Component
@@ -14,13 +15,30 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     StudentMapper studentMapper;
 
+    /**
+     * 获取所有学生
+     * @param currentPage 当前页数
+     * @return
+     */
     public List<StudentEntity> getStudents(int currentPage) {
         RowBounds rowBounds =new RowBounds((currentPage-1)*10,10);
         return studentMapper.selectByRowBounds(null,rowBounds);
     }
 
+    /**
+     * 添加学生
+     * 添加之前查一遍是否存在
+     * @param student
+     * @return
+     */
     public int addStudent(StudentEntity student) {
-        return studentMapper.addStudent(student);
+        Example example = new Example(StudentEntity.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("username",student.getUsername());
+        List<StudentEntity> list = studentMapper.selectByExample(example);//按username字段查一下 如果有了返回0 说明该学生添加过
+        if(list.isEmpty()){
+            return studentMapper.addStudent(student);
+        }else return 0;
     }
 
     public int updateStudent(StudentEntity student) {

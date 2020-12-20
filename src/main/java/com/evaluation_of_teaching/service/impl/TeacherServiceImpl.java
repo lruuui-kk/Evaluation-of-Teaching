@@ -1,11 +1,13 @@
 package com.evaluation_of_teaching.service.impl;
 
 import com.evaluation_of_teaching.dao.TeacherMapper;
+import com.evaluation_of_teaching.model.StudentEntity;
 import com.evaluation_of_teaching.model.TeacherEntity;
 import com.evaluation_of_teaching.service.TeacherService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 @Component
@@ -13,13 +15,30 @@ public class TeacherServiceImpl implements TeacherService {
     @Autowired
     TeacherMapper teacherMapper;
 
+    /**
+     * 获取所有老师
+     * @param currentPage 当前页数
+     * @return
+     */
     public List<TeacherEntity> getTeachers(int currentPage) {
         RowBounds rowBounds =new RowBounds((currentPage-1)*10,10);
         return teacherMapper.selectByRowBounds(null,rowBounds);
     }
 
+    /**
+     * 新增老师
+     * 新增的时候先查询新增的用户是否存在
+     * @param teacher
+     * @return
+     */
     public int addTeacher(TeacherEntity teacher) {
-        return teacherMapper.insert(teacher);
+        Example example = new Example(TeacherEntity.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("username",teacher.getUsername());
+        List<TeacherEntity> list = teacherMapper.selectByExample(example);//按username字段查一下 如果有了返回0 说明该老师添加过
+        if(list.isEmpty()){
+            return teacherMapper.insert(teacher);
+        }else return 0;
     }
 
     public int updateTeacher(TeacherEntity teacher) {

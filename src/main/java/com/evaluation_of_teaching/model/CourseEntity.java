@@ -15,6 +15,7 @@ public class CourseEntity {
     @Id
     private Integer course_id;
     private String name;
+    private String dept;
     private String term;
     private Date start_time;
     private Date end_time;

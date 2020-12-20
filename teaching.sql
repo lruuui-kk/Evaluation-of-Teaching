@@ -11,7 +11,7 @@
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 18/12/2020 16:57:49
+ Date: 20/12/2020 20:45:44
 */
 
 SET NAMES utf8mb4;
@@ -58,6 +58,7 @@ DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course`  (
   `course_id` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `dept` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `term` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `start_time` datetime(0) NULL DEFAULT NULL,
   `end_time` datetime(0) NULL DEFAULT NULL,
@@ -70,11 +71,13 @@ CREATE TABLE `course`  (
 -- ----------------------------
 -- Records of course
 -- ----------------------------
-INSERT INTO `course` VALUES (1, 'C语言', '1', '2020-12-14 23:05:06', '2021-03-01 23:05:11', '11栋101', 100, 1);
-INSERT INTO `course` VALUES (2, '数据结构', '1', '2020-12-14 23:06:00', '2021-01-01 23:06:03', '11栋202', 50, 1);
-INSERT INTO `course` VALUES (3, 'JAVA', '1', '2020-12-14 23:06:29', '2021-02-01 23:06:32', '18栋301', 150, 1);
-INSERT INTO `course` VALUES (4, '算法', '1', '2020-12-14 23:06:59', '2021-01-21 23:07:02', '11栋601', 60, 2);
-INSERT INTO `course` VALUES (5, '数据库系统', '1', '2020-12-14 23:07:29', '2021-02-12 23:07:32', '18栋302', 80, 2);
+INSERT INTO `course` VALUES (1, 'C语言', '信科', '1', '2020-12-14 23:05:06', '2021-03-01 23:05:11', '11栋101', 100, 1);
+INSERT INTO `course` VALUES (2, '数据结构', '信科', '1', '2020-12-14 23:06:00', '2021-01-01 23:06:03', '11栋202', 50, 1);
+INSERT INTO `course` VALUES (3, 'JAVA', '信科', '1', '2020-12-14 23:06:29', '2021-02-01 23:06:32', '18栋301', 150, 1);
+INSERT INTO `course` VALUES (4, '算法', '信科', '1', '2020-12-14 23:06:59', '2021-01-21 23:07:02', '11栋601', 60, 2);
+INSERT INTO `course` VALUES (5, '数据库系统', '信科', '1', '2020-12-14 23:07:29', '2021-02-12 23:07:32', '18栋302', 80, 2);
+INSERT INTO `course` VALUES (7, '金融学', '经管', '1', '2020-12-02 20:37:35', '2020-12-25 20:37:38', NULL, NULL, 3);
+INSERT INTO `course` VALUES (8, '国学', '国学', '1', NULL, NULL, NULL, NULL, 4);
 
 -- ----------------------------
 -- Table structure for stu_evaluation
@@ -117,7 +120,7 @@ CREATE TABLE `student`  (
   `sex` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `dept` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `stu_class` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`student_id`, `username`) USING BTREE
+  PRIMARY KEY (`student_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -146,7 +149,7 @@ CREATE TABLE `t_evaluation`  (
   `sum` int(255) NULL DEFAULT NULL,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`t_evaluation_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_evaluation
@@ -168,7 +171,7 @@ CREATE TABLE `teacher`  (
   `sno` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `sex` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `dept` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`teacher_id`, `username`) USING BTREE
+  PRIMARY KEY (`teacher_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------

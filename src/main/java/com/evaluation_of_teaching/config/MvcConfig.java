@@ -10,8 +10,8 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new LoginInterceptor())
-//                .addPathPatterns("/**")
-//                .excludePathPatterns("/index.html","/","/login","/css/*","/js/**","/img/**");
+        registry.addInterceptor(new LoginInterceptor())
+                .addPathPatterns("/**")//过滤所有请求
+                .excludePathPatterns("/index.html","/","/login","/css/*","/js/**","/img/**","/login");//除了这些
     }
 }

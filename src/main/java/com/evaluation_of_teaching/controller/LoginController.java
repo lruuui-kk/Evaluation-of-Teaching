@@ -54,4 +54,9 @@ public class LoginController {
         }
         return "";
     }
+
+    @RequestMapping(path = "/logout")
+    public void logout(HttpSession session){
+        session.setAttribute("loginUser",null);
+    }
 }

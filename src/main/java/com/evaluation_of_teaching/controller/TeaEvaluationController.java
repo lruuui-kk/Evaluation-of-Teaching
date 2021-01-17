@@ -1,5 +1,7 @@
 package com.evaluation_of_teaching.controller;
 
+import com.evaluation_of_teaching.dto.stuEvaDto;
+import com.evaluation_of_teaching.model.StuEvaluationEntity;
 import com.evaluation_of_teaching.model.TeaEvaluationEntity;
 import com.evaluation_of_teaching.model.TeacherEntity;
 import com.evaluation_of_teaching.service.TeaEvaluationService;
@@ -30,5 +32,15 @@ public class TeaEvaluationController {
     @RequestMapping(path = "/addTeaEvaluation",method = RequestMethod.POST)
     int addTeaEva(TeaEvaluationEntity teaEvaluation){
         return teaEvaluationService.addTeaEva(teaEvaluation);
+    }
+
+    @RequestMapping(path = "/queryStuEvaById",method = RequestMethod.GET)
+    public List<stuEvaDto> queryStuEvaById(int id){
+        return teaEvaluationService.queryStuEvaById(id);
+    }
+
+    @RequestMapping(path = "/queryTeaEvaById",method = RequestMethod.GET)
+    public List<TeaEvaluationEntity> queryTeaEvaById(int id){
+        return teaEvaluationService.queryTeaEvaById(id);
     }
 }

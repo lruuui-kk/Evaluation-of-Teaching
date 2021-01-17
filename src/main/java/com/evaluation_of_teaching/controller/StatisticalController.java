@@ -15,7 +15,7 @@ public class StatisticalController {
     StatisticalService statisticalService;
 
     @RequestMapping(path = "/statistical")
-    List<StatisticalDto> statistical(String name, String dept){
-        return statisticalService.statistical(name,dept);
+    List<StatisticalDto> statistical(int currentPage, String teaName, String dept, String courseName){
+        return statisticalService.statistical(currentPage,teaName,dept,courseName);
     }
 }

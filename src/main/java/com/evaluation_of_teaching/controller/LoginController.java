@@ -22,13 +22,13 @@ public class LoginController {
     AdminMapper adminMapper;
 
     @RequestMapping(path = "/login")
-    public String login(String username, String password, String flag, HttpSession session){
+    public Object login(String username, String password, String flag, HttpSession session){
         if(flag.equals("stu")){
             StudentEntity student = studentMapper.getStudentByUsername(username);
             if(student!=null){
                 if(student.getPassword().equals(password)){
                     session.setAttribute("loginUser",student);
-                    return student.getName();
+                    return student;
                 }else return "密码错误！";
             }else return "用户名错误！";
 
@@ -37,7 +37,7 @@ public class LoginController {
             if(teacher!=null){
                 if(teacher.getPassword().equals(password)){
                     session.setAttribute("loginUser",teacher);
-                    return teacher.getName();
+                    return teacher;
                 }else return "密码错误！";
             }else return "用户名错误！";
 
@@ -47,7 +47,7 @@ public class LoginController {
             if(admin!=null){
                 if(admin.getPassword().equals(password)){
                     session.setAttribute("loginUser",admin);
-                    return admin.getName();
+                    return admin;
                 }else return "密码错误！";
             }else return "用户名错误！";
 

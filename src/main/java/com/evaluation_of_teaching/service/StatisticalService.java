@@ -8,6 +8,6 @@ import java.util.List;
 @Repository
 public interface StatisticalService {
 
-    List<StatisticalDto> statistical(String name, String dept);
+    List<StatisticalDto> statistical(int currentPage, String teaName, String dept, String courseName);
 
 }

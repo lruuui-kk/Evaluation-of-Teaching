@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface CourseService {
 
-    List<CourseEntity> getCourses(int currentPage);
+    List<CourseEntity> getCourses(int currentPage, String name, String dept);
 
     List<CourseEntity> getCourseByDpet(String dept, int currentPage);
 

@@ -17,9 +17,9 @@ public class CourseController {
     CourseService courseService;
 
     @RequestMapping(path = "/getCourses")
-    public List<CourseEntity> getCourses(int currentPage){
+    public List<CourseEntity> getCourses(int currentPage, String name, String dept){
         System.out.println("所有课程");
-        return courseService.getCourses(currentPage);
+        return courseService.getCourses(currentPage,name,dept);
     }
 
     @RequestMapping(path = "/getCourseByDept")

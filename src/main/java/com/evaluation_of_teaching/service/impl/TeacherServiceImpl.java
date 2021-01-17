@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
 @Component
@@ -16,13 +17,23 @@ public class TeacherServiceImpl implements TeacherService {
     TeacherMapper teacherMapper;
 
     /**
-     * 获取所有老师
-     * @param currentPage 当前页数
+     *
+     * @param currentPage
+     * @param name
+     * @param dept
      * @return
      */
-    public List<TeacherEntity> getTeachers(int currentPage) {
+    public List<TeacherEntity> getTeachers(int currentPage, String name, String dept) {
         RowBounds rowBounds =new RowBounds((currentPage-1)*10,10);
-        return teacherMapper.selectByRowBounds(null,rowBounds);
+        Example example = new Example(TeacherEntity.class);
+        Example.Criteria criteria = example.createCriteria();
+        if(StringUtil.isNotEmpty(name)){
+            criteria.andLike("name","%"+name+"%");
+        }
+        if(StringUtil.isNotEmpty(dept)){
+            criteria.andLike("dept","%"+dept+"%");
+        }
+        return teacherMapper.selectByExampleAndRowBounds(example,rowBounds);
     }
 
     /**

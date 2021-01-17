@@ -22,4 +22,5 @@ public class CourseEntity {
     private String place;
     private Integer num;
     private Integer teacher_id;
+    private String teacher_name;
 }

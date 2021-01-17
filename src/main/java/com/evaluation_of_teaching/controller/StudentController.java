@@ -17,9 +17,9 @@ public class StudentController {
     StudentService studentService;
 
     @RequestMapping(path = "/getStudents",method = RequestMethod.GET)//POST不行
-    public List<StudentEntity> getStudents(int currentPage){
+    public List<StudentEntity> getStudents(int currentPage, String name, String dept){
         System.out.println("所有学生");
-        return studentService.getStudents(currentPage);
+        return studentService.getStudents(currentPage,name,dept);
     }
 
     @RequestMapping(path = "/addStudent",method = RequestMethod.POST)

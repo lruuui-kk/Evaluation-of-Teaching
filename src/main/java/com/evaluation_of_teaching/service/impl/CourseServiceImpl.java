@@ -2,11 +2,13 @@ package com.evaluation_of_teaching.service.impl;
 
 import com.evaluation_of_teaching.dao.CourseMapper;
 import com.evaluation_of_teaching.model.CourseEntity;
+import com.evaluation_of_teaching.model.TeacherEntity;
 import com.evaluation_of_teaching.service.CourseService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
 @Component
@@ -15,13 +17,23 @@ public class CourseServiceImpl implements CourseService {
     CourseMapper courseMapper;
 
     /**
-     * 获取所有课程
-     * @param currentPage 当前页
+     *
+     * @param currentPage
+     * @param name
+     * @param dept
      * @return
      */
-    public List<CourseEntity> getCourses(int currentPage) {
+    public List<CourseEntity> getCourses(int currentPage, String name, String dept) {
         RowBounds rowBounds =new RowBounds((currentPage-1)*10,10);
-        return courseMapper.selectByRowBounds(null,rowBounds);
+        Example example = new Example(CourseEntity.class);
+        Example.Criteria criteria = example.createCriteria();
+        if(StringUtil.isNotEmpty(name)){
+            criteria.andLike("name","%"+name+"%");
+        }
+        if(StringUtil.isNotEmpty(dept)){
+            criteria.andLike("dept","%"+dept+"%");
+        }
+        return courseMapper.selectByExampleAndRowBounds(example,rowBounds);
     }
 
     /**

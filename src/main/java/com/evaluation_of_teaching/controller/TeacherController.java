@@ -17,9 +17,9 @@ public class TeacherController {
     TeacherService teacherService;
 
     @RequestMapping(path = "/getTeachers")
-    public List<TeacherEntity> getTeachers(int currentPage){
+    public List<TeacherEntity> getTeachers(int currentPage, String name, String dept){
         System.out.println("所有老师");
-        return teacherService.getTeachers(currentPage);
+        return teacherService.getTeachers(currentPage,name,dept);
     }
 
     @RequestMapping(path = "/addTeacher",method = RequestMethod.POST)

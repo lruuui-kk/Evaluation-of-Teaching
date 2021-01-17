@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StatisticalDto {
     private String teaName;
-    private String sno;
-    private String sex;
+    private Integer courseId;
+    private String courseName;
     private String dept;
+    private Integer num;
     private Integer stuScore;
     private Integer teaScore;
 }

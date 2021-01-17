@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface StudentService {
 
-    List<StudentEntity> getStudents(int currentPage);
+    List<StudentEntity> getStudents(int currentPage, String name, String dept);
 
     int addStudent(StudentEntity student);
 

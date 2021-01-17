@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface TeacherService {
-    List<TeacherEntity> getTeachers(int currentPage);
+    List<TeacherEntity> getTeachers(int currentPage, String name, String dept);
 
     int addTeacher(TeacherEntity teacher);
 

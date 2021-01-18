@@ -18,4 +18,14 @@ public class StatisticalController {
     List<StatisticalDto> statistical(int currentPage, String teaName, String dept, String courseName){
         return statisticalService.statistical(currentPage,teaName,dept,courseName);
     }
+
+    @RequestMapping(path = "/statisticalStuSort")
+    List<StatisticalDto> statisticalStuSort(int currentPage, String teaName, String dept, String courseName, String dir){
+        return statisticalService.statisticalStuSort(currentPage,teaName,dept,courseName,dir);
+    }
+
+    @RequestMapping(path = "/statisticalTeaSort")
+    List<StatisticalDto> statisticalTeaSort(int currentPage, String teaName, String dept, String courseName, String dir){
+        return statisticalService.statisticalTeaSort(currentPage,teaName,dept,courseName,dir);
+    }
 }

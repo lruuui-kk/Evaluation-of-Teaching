@@ -17,10 +17,10 @@ public class CourseServiceImpl implements CourseService {
     CourseMapper courseMapper;
 
     /**
-     *
-     * @param currentPage
-     * @param name
-     * @param dept
+     * 获取课程
+     * @param currentPage 当前页数 必须传
+     * @param name 课程名 选择传参，可以进行模糊查询
+     * @param dept 课程所属部门 选择传参，可以进行模糊查询
      * @return
      */
     public List<CourseEntity> getCourses(int currentPage, String name, String dept) {
@@ -38,6 +38,7 @@ public class CourseServiceImpl implements CourseService {
 
     /**
      * 按学院获取课程
+     * 上面接口已经实现了这个功能 此接口应该废弃
      * @param dept
      * @param currentPage
      * @return

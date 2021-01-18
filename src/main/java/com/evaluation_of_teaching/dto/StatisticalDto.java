@@ -13,6 +13,6 @@ public class StatisticalDto {
     private String courseName;
     private String dept;
     private Integer num;
-    private Integer stuScore;
-    private Integer teaScore;
+    private int stuScore;
+    private int teaScore;
 }

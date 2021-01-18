@@ -10,4 +10,8 @@ public interface StatisticalService {
 
     List<StatisticalDto> statistical(int currentPage, String teaName, String dept, String courseName);
 
+    List<StatisticalDto> statisticalStuSort(int currentPage, String teaName, String dept, String courseName, String dir);
+
+    List<StatisticalDto> statisticalTeaSort(int currentPage, String teaName, String dept, String courseName, String dir);
+
 }

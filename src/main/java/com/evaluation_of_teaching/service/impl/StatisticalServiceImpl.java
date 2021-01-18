@@ -17,6 +17,8 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Component
@@ -88,6 +90,42 @@ public class StatisticalServiceImpl implements StatisticalService {
                 }
                 dtoList.add(dto);//把统计好的每个老师放进list
             }
+        }
+        return dtoList;
+    }
+
+    public List<StatisticalDto> statisticalStuSort(int currentPage, String teaName, String dept, String courseName, String dir) {
+        List<StatisticalDto> dtoList =statistical(currentPage,teaName,dept,courseName);
+        if(!dtoList.isEmpty()){
+            Collections.sort(dtoList, new Comparator<StatisticalDto>() {
+                @Override
+                public int compare(StatisticalDto o1, StatisticalDto o2) {
+                    if(StringUtil.isNotEmpty(dir)){
+                        if(dir.equals("desc")){
+                            return o1.getStuScore()-(o2.getStuScore());
+                        }
+                    }
+                    return o2.getStuScore()-(o1.getStuScore());
+                }
+            });
+        }
+        return dtoList;
+    }
+
+    public List<StatisticalDto> statisticalTeaSort(int currentPage, String teaName, String dept, String courseName, String dir) {
+        List<StatisticalDto> dtoList =statistical(currentPage,teaName,dept,courseName);
+        if(!dtoList.isEmpty()){
+            Collections.sort(dtoList, new Comparator<StatisticalDto>() {
+                @Override
+                public int compare(StatisticalDto o1, StatisticalDto o2) {
+                    if(StringUtil.isNotEmpty(dir)){
+                        if(dir.equals("desc")){
+                            return o1.getTeaScore()-(o2.getTeaScore());
+                        }
+                    }
+                    return o2.getTeaScore()-(o1.getTeaScore());
+                }
+            });
         }
         return dtoList;
     }

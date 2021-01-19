@@ -33,6 +33,15 @@ public class StatisticalServiceImpl implements StatisticalService {
     @Autowired
     TeaEvaluationMapper teaEvaluationMapper;
 
+    /**
+     * 统计数据
+     * 算出每门课程的学生评价的平均分 和老师对该老师评价的平均分 并返回课程 老师 分数等数据
+     * @param currentPage 当前页数
+     * @param teaName 老师名字 可提供模糊查询
+     * @param dept 课程所属学院 可提供模糊查询
+     * @param courseName 课程名 可提供模糊查询
+     * @return
+     */
     public List<StatisticalDto> statistical(int currentPage, String teaName, String dept, String courseName) {
         List<StatisticalDto> dtoList = new ArrayList<>();
         Example example = new Example(CourseEntity.class);//通用mapper里的添加条件查询
@@ -94,6 +103,15 @@ public class StatisticalServiceImpl implements StatisticalService {
         return dtoList;
     }
 
+    /**
+     * 统计数据 按学生平均分排序
+     * @param currentPage 当前页数
+     * @param teaName 同上
+     * @param dept 同上
+     * @param courseName 同上
+     * @param dir 排序方式参数 传入asc为按学生平均成绩升序排序  其他值为降序 默认降序
+     * @return
+     */
     public List<StatisticalDto> statisticalStuSort(int currentPage, String teaName, String dept, String courseName, String dir) {
         List<StatisticalDto> dtoList =statistical(currentPage,teaName,dept,courseName);
         if(!dtoList.isEmpty()){
@@ -101,7 +119,7 @@ public class StatisticalServiceImpl implements StatisticalService {
                 @Override
                 public int compare(StatisticalDto o1, StatisticalDto o2) {
                     if(StringUtil.isNotEmpty(dir)){
-                        if(dir.equals("desc")){
+                        if(dir.equals("asc")){
                             return o1.getStuScore()-(o2.getStuScore());
                         }
                     }
@@ -119,7 +137,7 @@ public class StatisticalServiceImpl implements StatisticalService {
                 @Override
                 public int compare(StatisticalDto o1, StatisticalDto o2) {
                     if(StringUtil.isNotEmpty(dir)){
-                        if(dir.equals("desc")){
+                        if(dir.equals("asc")){
                             return o1.getTeaScore()-(o2.getTeaScore());
                         }
                     }

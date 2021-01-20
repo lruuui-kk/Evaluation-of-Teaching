@@ -1,5 +1,6 @@
 package com.evaluation_of_teaching.controller;
 
+import com.evaluation_of_teaching.dto.StuEvaluationDto;
 import com.evaluation_of_teaching.dto.courseTeacherDto;
 import com.evaluation_of_teaching.model.StuEvaluationEntity;
 import com.evaluation_of_teaching.service.StuEvaluationService;
@@ -25,6 +26,11 @@ public class StuEvaluationController {
     @RequestMapping(path = "/queryStuEva",method = RequestMethod.GET)
     public courseTeacherDto queryStuEva(int userId, int courseId){
         return stuEvaluationService.queryStuEva(userId,courseId);
+    }
+
+    @RequestMapping(path = "/queryAllStuEva",method = RequestMethod.GET)
+    public List<StuEvaluationDto> queryAllStuEva(int currentPage){
+        return stuEvaluationService.queryAllStuEva(currentPage);
     }
 
     @RequestMapping(path = "/addStuEvaluation",method = RequestMethod.POST)

@@ -1,5 +1,6 @@
 package com.evaluation_of_teaching.service;
 
+import com.evaluation_of_teaching.dto.TeaEvaluationDto;
 import com.evaluation_of_teaching.dto.stuEvaDto;
 import com.evaluation_of_teaching.model.StuEvaluationEntity;
 import com.evaluation_of_teaching.model.TeaEvaluationEntity;
@@ -14,6 +15,8 @@ public interface TeaEvaluationService {
     List<TeaEvaluationEntity> getTeaEvaList(int userId);
 
     TeacherEntity queryTeaEva(int id1, int id2);
+
+    List<TeaEvaluationDto> queryAllTeaEva(int currentPage);
 
     int addTeaEva(TeaEvaluationEntity teaEvaluation);
 

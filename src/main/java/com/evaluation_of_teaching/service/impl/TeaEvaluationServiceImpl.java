@@ -4,12 +4,12 @@ import com.evaluation_of_teaching.dao.CourseMapper;
 import com.evaluation_of_teaching.dao.StuEvaluationMapper;
 import com.evaluation_of_teaching.dao.TeaEvaluationMapper;
 import com.evaluation_of_teaching.dao.TeacherMapper;
+import com.evaluation_of_teaching.dto.StuEvaluationDto;
+import com.evaluation_of_teaching.dto.TeaEvaluationDto;
 import com.evaluation_of_teaching.dto.stuEvaDto;
-import com.evaluation_of_teaching.model.CourseEntity;
-import com.evaluation_of_teaching.model.StuEvaluationEntity;
-import com.evaluation_of_teaching.model.TeaEvaluationEntity;
-import com.evaluation_of_teaching.model.TeacherEntity;
+import com.evaluation_of_teaching.model.*;
 import com.evaluation_of_teaching.service.TeaEvaluationService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -48,6 +48,42 @@ public class TeaEvaluationServiceImpl implements TeaEvaluationService {
             return teacherEntity;
         }
         return null;
+    }
+
+    /**
+     * 查询所有老师对所有老师评价（用于管理员查看老师评价）
+     * @param currentPage
+     * @return
+     */
+    public List<TeaEvaluationDto> queryAllTeaEva(int currentPage){
+        List<TeaEvaluationDto> dtoList = new ArrayList<>();
+        Example example = new Example(TeaEvaluationEntity.class);//通用mapper里的添加条件查询
+        RowBounds rowBounds =new RowBounds((currentPage-1)*10,10);
+
+        List<TeaEvaluationEntity> teaEvaList = teaEvaluationMapper.selectByExampleAndRowBounds(example,rowBounds);
+        if(!teaEvaList.isEmpty()){
+            for (int i = 0; i < teaEvaList.size(); i++) {
+                TeaEvaluationDto dto = new TeaEvaluationDto();
+                Integer tea_id1 = teaEvaList.get(i).getTeacher_id1();//评价者
+                Integer tea_id2 = teaEvaList.get(i).getTeacher_id2();//被评者
+                TeacherEntity teacher1 = teacherMapper.selectByPrimaryKey(tea_id1);//评价者
+                TeacherEntity teacher2 = teacherMapper.selectByPrimaryKey(tea_id2);//被评者
+                //评价者
+                dto.setTeacher_id(teacher1.getTeacher_id());
+                dto.setUsername(teacher1.getUsername());
+                dto.setPassword(teacher1.getPassword());
+                dto.setName(teacher1.getName());
+                dto.setSno(teacher1.getSno());
+                dto.setSex(teacher1.getSex());
+                dto.setDept(teacher1.getDept());
+
+                dto.setTeaEvaluation(teaEvaList.get(i));
+                dto.setTeacher(teacher2);//被评者
+
+                dtoList.add(dto);//把查出来的每个部分信息放进list
+            }
+        }
+        return dtoList;
     }
 
     public int addTeaEva(TeaEvaluationEntity teaEvaluation) {

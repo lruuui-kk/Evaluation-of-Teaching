@@ -48,6 +48,7 @@ public class TeacherServiceImpl implements TeacherService {
         criteria.andEqualTo("username",teacher.getUsername());
         List<TeacherEntity> list = teacherMapper.selectByExample(example);//按username字段查一下 如果有了返回0 说明该老师添加过
         if(list.isEmpty()){
+            teacher.setPassword(teacher.getUsername());
             return teacherMapper.insert(teacher);
         }else return 0;
     }

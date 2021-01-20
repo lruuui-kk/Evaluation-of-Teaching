@@ -48,6 +48,7 @@ public class StudentServiceImpl implements StudentService {
         criteria.andEqualTo("username",student.getUsername());
         List<StudentEntity> list = studentMapper.selectByExample(example);//按username字段查一下 如果有了返回0 说明该学生添加过
         if(list.isEmpty()){
+            student.setPassword(student.getUsername());
             return studentMapper.addStudent(student);
         }else return 0;
     }

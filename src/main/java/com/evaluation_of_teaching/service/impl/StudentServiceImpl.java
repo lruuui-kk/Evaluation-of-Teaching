@@ -9,7 +9,10 @@ import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Component
 public class StudentServiceImpl implements StudentService {
 
@@ -23,7 +26,8 @@ public class StudentServiceImpl implements StudentService {
      * @param dept
      * @return
      */
-    public List<StudentEntity> getStudents(int currentPage, String name, String dept) {
+    public Map getStudents(int currentPage, String name, String dept) {
+        Map map = new HashMap();
         RowBounds rowBounds =new RowBounds((currentPage-1)*10,10);
         Example example = new Example(StudentEntity.class);
         Example.Criteria criteria = example.createCriteria();
@@ -33,7 +37,12 @@ public class StudentServiceImpl implements StudentService {
         if(StringUtil.isNotEmpty(dept)){
             criteria.andLike("dept","%"+dept+"%");
         }
-        return studentMapper.selectByExampleAndRowBounds(example,rowBounds);
+        List<StudentEntity> studentList = studentMapper.selectByExampleAndRowBounds(example, rowBounds);
+        int count = studentMapper.selectCountByExample(example);
+
+        map.put("data",studentList);
+        map.put("count",count);
+        return map;
     }
 
     /**

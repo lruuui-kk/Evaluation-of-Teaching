@@ -8,19 +8,20 @@ import com.evaluation_of_teaching.model.TeacherEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface TeaEvaluationService {
 
-    List<TeaEvaluationEntity> getTeaEvaList(int userId);
+    Map getTeaEvaList(int currentPage, int userId);
 
     TeacherEntity queryTeaEva(int id1, int id2);
 
-    List<TeaEvaluationDto> queryAllTeaEva(int currentPage);
+    Map queryAllTeaEva(int currentPage);
 
     int addTeaEva(TeaEvaluationEntity teaEvaluation);
 
-    List<stuEvaDto> queryStuEvaById(int id);
+    Map queryStuEvaById(int currentPage, int id);
 
-    List<TeaEvaluationEntity> queryTeaEvaById(int id);
+    Map queryTeaEvaById(int currentPage, int id);
 }

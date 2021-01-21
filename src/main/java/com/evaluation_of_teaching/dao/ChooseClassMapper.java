@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ChooseClassMapper extends Mapper<ChooseClassEntity> {
 
-    List<StudentEntity> queryChooseListByUser(int userId);
+    List<StudentEntity> queryChooseListByUser(int currentPage, int userId);
 
     int deleteChooseClass(int userId,int courseId);
 }

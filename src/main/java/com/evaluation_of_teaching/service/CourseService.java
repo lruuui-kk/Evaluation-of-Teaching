@@ -4,13 +4,12 @@ import com.evaluation_of_teaching.model.CourseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface CourseService {
 
-    List<CourseEntity> getCourses(int currentPage, String name, String dept);
-
-    List<CourseEntity> getCourseByDpet(String dept, int currentPage);
+    Map getCourses(int currentPage, String name, String dept);
 
     int addCourse(CourseEntity course);
 

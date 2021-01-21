@@ -71,28 +71,4 @@ public class LoginController {
         session.setAttribute("loginUser",null);
     }
 
-    @Autowired
-    CourseMapper courseMapper;
-
-    @RequestMapping(path = "/testCount")
-    public Map test(int currentPage, String name, String dept){
-        Map map = new HashMap();
-
-        RowBounds rowBounds =new RowBounds((currentPage-1)*3,3);
-        Example example = new Example(CourseEntity.class);
-        Example.Criteria criteria = example.createCriteria();
-        if(StringUtil.isNotEmpty(name)){
-            criteria.andLike("name","%"+name+"%");
-        }
-        if(StringUtil.isNotEmpty(dept)){
-            criteria.andLike("dept","%"+dept+"%");
-        }
-        List<CourseEntity> courseList = courseMapper.selectByExampleAndRowBounds(example, rowBounds);
-        int count = courseMapper.selectCountByExample(example);
-
-        map.put("data",courseList);
-        map.put("count",count);
-
-        return map;
-    }
 }

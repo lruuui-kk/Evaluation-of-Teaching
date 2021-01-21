@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/student")
@@ -17,8 +18,7 @@ public class StudentController {
     StudentService studentService;
 
     @RequestMapping(path = "/getStudents",method = RequestMethod.GET)//POST不行
-    public List<StudentEntity> getStudents(int currentPage, String name, String dept){
-        System.out.println("所有学生");
+    public Map getStudents(int currentPage, String name, String dept){
         return studentService.getStudents(currentPage,name,dept);
     }
 

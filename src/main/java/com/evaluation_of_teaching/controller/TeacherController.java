@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/teacher")
@@ -17,9 +19,8 @@ public class TeacherController {
     TeacherService teacherService;
 
     @RequestMapping(path = "/getTeachers")
-    public List<TeacherEntity> getTeachers(int currentPage, String name, String dept){
-        System.out.println("所有老师");
-        return teacherService.getTeachers(currentPage,name,dept);
+    public Map getTeachers(int currentPage, String name, String dept){
+        return teacherService.getTeachers(currentPage, name, dept);
     }
 
     @RequestMapping(path = "/addTeacher",method = RequestMethod.POST)

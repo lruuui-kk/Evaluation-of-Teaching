@@ -16,10 +16,7 @@ import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class StatisticalServiceImpl implements StatisticalService {
@@ -42,7 +39,8 @@ public class StatisticalServiceImpl implements StatisticalService {
      * @param courseName 课程名 可提供模糊查询
      * @return
      */
-    public List<StatisticalDto> statistical(int currentPage, String teaName, String dept, String courseName) {
+    public Map statistical(int currentPage, String teaName, String dept, String courseName) {
+        Map map = new HashMap();
         List<StatisticalDto> dtoList = new ArrayList<>();
         Example example = new Example(CourseEntity.class);//通用mapper里的添加条件查询
         Example.Criteria criteria = example.createCriteria();
@@ -100,7 +98,10 @@ public class StatisticalServiceImpl implements StatisticalService {
                 dtoList.add(dto);//把统计好的每个老师放进list
             }
         }
-        return dtoList;
+        int count = courseMapper.selectCountByExample(example);
+        map.put("data",dtoList);
+        map.put("count",count);
+        return map;
     }
 
     /**
@@ -112,9 +113,10 @@ public class StatisticalServiceImpl implements StatisticalService {
      * @param dir 排序方式参数 传入asc为按学生平均成绩升序排序  其他值为降序 默认降序
      * @return
      */
-    public List<StatisticalDto> statisticalStuSort(int currentPage, String teaName, String dept, String courseName, String dir) {
-        List<StatisticalDto> dtoList =statistical(currentPage,teaName,dept,courseName);
-        if(!dtoList.isEmpty()){
+    public Map statisticalStuSort(int currentPage, String teaName, String dept, String courseName, String dir) {
+        Map map =statistical(currentPage,teaName,dept,courseName);
+        List<StatisticalDto> dtoList = (List<StatisticalDto>) map.get("dtoList");
+        if(!map.isEmpty()){
             Collections.sort(dtoList, new Comparator<StatisticalDto>() {
                 @Override
                 public int compare(StatisticalDto o1, StatisticalDto o2) {
@@ -127,11 +129,12 @@ public class StatisticalServiceImpl implements StatisticalService {
                 }
             });
         }
-        return dtoList;
+        return map;
     }
 
-    public List<StatisticalDto> statisticalTeaSort(int currentPage, String teaName, String dept, String courseName, String dir) {
-        List<StatisticalDto> dtoList =statistical(currentPage,teaName,dept,courseName);
+    public Map statisticalTeaSort(int currentPage, String teaName, String dept, String courseName, String dir) {
+        Map map =statistical(currentPage,teaName,dept,courseName);
+        List<StatisticalDto> dtoList = (List<StatisticalDto>) map.get("dtoList");
         if(!dtoList.isEmpty()){
             Collections.sort(dtoList, new Comparator<StatisticalDto>() {
                 @Override
@@ -145,6 +148,6 @@ public class StatisticalServiceImpl implements StatisticalService {
                 }
             });
         }
-        return dtoList;
+        return map;
     }
 }

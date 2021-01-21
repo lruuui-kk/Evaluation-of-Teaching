@@ -4,10 +4,11 @@ import com.evaluation_of_teaching.model.TeacherEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface TeacherService {
-    List<TeacherEntity> getTeachers(int currentPage, String name, String dept);
+    Map getTeachers(int currentPage, String name, String dept);
 
     int addTeacher(TeacherEntity teacher);
 

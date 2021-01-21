@@ -1,15 +1,13 @@
 package com.evaluation_of_teaching.service;
 
-import com.evaluation_of_teaching.model.CourseEntity;
-import com.evaluation_of_teaching.model.StudentEntity;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface ChooseClassService {
 
-    List<StudentEntity> queryChooseListByUser(int userId);
+    Map queryChooseListByUser(int currentPage, int userId);
 
     int addChooseClass(int userId,int courseId);
 

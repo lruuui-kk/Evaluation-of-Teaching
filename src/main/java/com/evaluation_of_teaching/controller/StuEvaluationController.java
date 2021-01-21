@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/stuEvaluation")
@@ -19,8 +20,8 @@ public class StuEvaluationController {
     StuEvaluationService stuEvaluationService;
 
     @RequestMapping(path = "/getStuEvaluations",method = RequestMethod.GET)
-    public List<StuEvaluationEntity> getStuEvaList(int userId){
-        return stuEvaluationService.getStuEvaList(userId);
+    public Map getStuEvaList(int currentPage, int userId){
+        return stuEvaluationService.getStuEvaList(currentPage,userId);
     }
 
     @RequestMapping(path = "/queryStuEva",method = RequestMethod.GET)
@@ -29,7 +30,7 @@ public class StuEvaluationController {
     }
 
     @RequestMapping(path = "/queryAllStuEva",method = RequestMethod.GET)
-    public List<StuEvaluationDto> queryAllStuEva(int currentPage){
+    public Map queryAllStuEva(int currentPage){
         return stuEvaluationService.queryAllStuEva(currentPage);
     }
 

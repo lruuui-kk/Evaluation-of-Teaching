@@ -16,7 +16,10 @@ import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Component
 public class TeaEvaluationServiceImpl implements TeaEvaluationService {
 
@@ -29,14 +32,49 @@ public class TeaEvaluationServiceImpl implements TeaEvaluationService {
     @Autowired
     CourseMapper courseMapper;
 
-    public List<TeaEvaluationEntity> getTeaEvaList(int userId) {
+    /**
+     * 查询某老师对所有老师的评价（用于老师查看自己评价）
+     * @param currentPage
+     * @param userId
+     * @return
+     */
+    public Map getTeaEvaList(int currentPage, int userId) {
+        Map map = new HashMap();
+        RowBounds rowBounds =new RowBounds((currentPage-1)*10,10);
+        List<TeaEvaluationDto> dtoList = new ArrayList<>();
         Example example = new Example(TeaEvaluationEntity.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("teacher_id1",userId);
-        return teaEvaluationMapper.selectByExample(example);
+        List<TeaEvaluationEntity> teaEvaList = teaEvaluationMapper.selectByExampleAndRowBounds(example,rowBounds);
+        if(!teaEvaList.isEmpty()){
+            for (int i = 0; i < teaEvaList.size(); i++) {
+                TeaEvaluationDto dto = new TeaEvaluationDto();
+                Integer tea_id1 = teaEvaList.get(i).getTeacher_id1();//评价者
+                Integer tea_id2 = teaEvaList.get(i).getTeacher_id2();//被评者
+                TeacherEntity teacher1 = teacherMapper.selectByPrimaryKey(tea_id1);//评价者
+                TeacherEntity teacher2 = teacherMapper.selectByPrimaryKey(tea_id2);//被评者
+                //评价者
+                dto.setTeacher_id(teacher1.getTeacher_id());
+                dto.setUsername(teacher1.getUsername());
+                dto.setPassword(teacher1.getPassword());
+                dto.setName(teacher1.getName());
+                dto.setSno(teacher1.getSno());
+                dto.setSex(teacher1.getSex());
+                dto.setDept(teacher1.getDept());
+
+                dto.setTeaEvaluation(teaEvaList.get(i));
+                dto.setTeacher(teacher2);//被评者
+
+                dtoList.add(dto);//把查出来的每个部分信息放进list
+            }
+        }
+        int count = teaEvaluationMapper.selectCountByExample(example);
+        map.put("data",dtoList);
+        map.put("count",count);
+        return map;
     }
 
-    @Override
+
     public TeacherEntity queryTeaEva(int id1, int id2) {
         Example example = new Example(TeaEvaluationEntity.class);
         Example.Criteria criteria = example.createCriteria();
@@ -55,7 +93,8 @@ public class TeaEvaluationServiceImpl implements TeaEvaluationService {
      * @param currentPage
      * @return
      */
-    public List<TeaEvaluationDto> queryAllTeaEva(int currentPage){
+    public Map queryAllTeaEva(int currentPage){
+        Map map = new HashMap();
         List<TeaEvaluationDto> dtoList = new ArrayList<>();
         Example example = new Example(TeaEvaluationEntity.class);//通用mapper里的添加条件查询
         RowBounds rowBounds =new RowBounds((currentPage-1)*10,10);
@@ -83,7 +122,10 @@ public class TeaEvaluationServiceImpl implements TeaEvaluationService {
                 dtoList.add(dto);//把查出来的每个部分信息放进list
             }
         }
-        return dtoList;
+        int count = teaEvaluationMapper.selectCountByExample(example);
+        map.put("data",dtoList);
+        map.put("count",count);
+        return map;
     }
 
     public int addTeaEva(TeaEvaluationEntity teaEvaluation) {
@@ -98,7 +140,14 @@ public class TeaEvaluationServiceImpl implements TeaEvaluationService {
         return teaEvaluationMapper.insert(teaEvaluation);
     }
 
-    public List<stuEvaDto> queryStuEvaById(int id){
+    /**
+     * 查询所有学生对某老师的评价
+     * @param currentPage
+     * @param id 被评老师id
+     * @return
+     */
+    public Map queryStuEvaById(int currentPage, int id){
+        Map map = new HashMap();
         List<stuEvaDto> dtoList = new ArrayList<>();
         Example example = new Example(StuEvaluationEntity.class);
         Example.Criteria criteria = example.createCriteria();
@@ -134,13 +183,27 @@ public class TeaEvaluationServiceImpl implements TeaEvaluationService {
                 dtoList.add(dto);
             }
         }
-        return dtoList;
+        int count = stuEvaluationMapper.selectCountByExample(example);
+        map.put("data",dtoList);
+        map.put("count",count);
+        return map;
     }
 
-    public List<TeaEvaluationEntity> queryTeaEvaById(int id){
+    /**
+     * 查询所有老师对某老师的评价
+     * @param currentPage
+     * @param id 被评老师id
+     * @return
+     */
+    public Map queryTeaEvaById(int currentPage, int id){
+        Map map = new HashMap();
         Example example = new Example(TeaEvaluationEntity.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("teacher_id2",id);
-        return teaEvaluationMapper.selectByExample(example);
+        List<TeaEvaluationEntity> teaEvaList = teaEvaluationMapper.selectByExample(example);
+        int count = teaEvaluationMapper.selectCountByExample(example);
+        map.put("data",teaEvaList);
+        map.put("count",count);
+        return map;
     }
 }

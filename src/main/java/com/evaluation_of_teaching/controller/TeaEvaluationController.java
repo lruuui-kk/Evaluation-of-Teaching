@@ -1,9 +1,7 @@
 package com.evaluation_of_teaching.controller;
 
-import com.evaluation_of_teaching.dto.StuEvaluationDto;
 import com.evaluation_of_teaching.dto.TeaEvaluationDto;
 import com.evaluation_of_teaching.dto.stuEvaDto;
-import com.evaluation_of_teaching.model.StuEvaluationEntity;
 import com.evaluation_of_teaching.model.TeaEvaluationEntity;
 import com.evaluation_of_teaching.model.TeacherEntity;
 import com.evaluation_of_teaching.service.TeaEvaluationService;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/teaEvaluation")
@@ -22,8 +21,8 @@ public class TeaEvaluationController {
     TeaEvaluationService teaEvaluationService;
 
     @RequestMapping(path = "/getTeaEvaluations",method = RequestMethod.GET)
-    public List<TeaEvaluationEntity> getTeaEvaList(int userId){
-        return teaEvaluationService.getTeaEvaList(userId);
+    public Map getTeaEvaList(int currentPage, int userId){
+        return teaEvaluationService.getTeaEvaList(currentPage,userId);
     }
 
     @RequestMapping(path = "/queryTeaEva",method = RequestMethod.GET)
@@ -32,7 +31,7 @@ public class TeaEvaluationController {
     }
 
     @RequestMapping(path = "/queryAllTeaEva",method = RequestMethod.GET)
-    public List<TeaEvaluationDto> queryAllTeaEva(int currentPage){
+    public Map queryAllTeaEva(int currentPage){
         return teaEvaluationService.queryAllTeaEva(currentPage);
     }
 
@@ -42,12 +41,12 @@ public class TeaEvaluationController {
     }
 
     @RequestMapping(path = "/queryStuEvaById",method = RequestMethod.GET)
-    public List<stuEvaDto> queryStuEvaById(int id){
-        return teaEvaluationService.queryStuEvaById(id);
+    public Map queryStuEvaById(int currentPage, int id){
+        return teaEvaluationService.queryStuEvaById(currentPage,id);
     }
 
     @RequestMapping(path = "/queryTeaEvaById",method = RequestMethod.GET)
-    public List<TeaEvaluationEntity> queryTeaEvaById(int id){
-        return teaEvaluationService.queryTeaEvaById(id);
+    public Map queryTeaEvaById(int currentPage, int id){
+        return teaEvaluationService.queryTeaEvaById(currentPage,id);
     }
 }

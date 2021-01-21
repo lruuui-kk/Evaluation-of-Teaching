@@ -15,11 +15,12 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class StuEvaluationServiceImpl implements StuEvaluationService {
@@ -33,11 +34,41 @@ public class StuEvaluationServiceImpl implements StuEvaluationService {
     @Autowired
     StuEvaluationMapper stuEvaluationMapper;
 
-    public List<StuEvaluationEntity> getStuEvaList(int userId) {
+    /**
+     * 查询某学生对所有课程的评价（用于学生查看自己评价）
+     * @param currentPage
+     * @param userId
+     * @return
+     */
+    public Map getStuEvaList(int currentPage, int userId) {
+        Map map = new HashMap();
+        RowBounds rowBounds =new RowBounds((currentPage-1)*10,10);
+        List<StuEvaluationDto> dtoList = new ArrayList<>();
         Example example = new Example(StuEvaluationEntity.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("student_id",userId);
-        return stuEvaluationMapper.selectByExample(example);
+        List<StuEvaluationEntity> stuEvaList = stuEvaluationMapper.selectByExampleAndRowBounds(example,rowBounds);
+        if(!stuEvaList.isEmpty()){
+            for (int i = 0; i < stuEvaList.size(); i++) {
+                StuEvaluationDto dto = new StuEvaluationDto();
+                Integer stu_id = stuEvaList.get(i).getStudent_id();
+                Integer tea_id = stuEvaList.get(i).getTeacher_id();
+                Integer cou_id = stuEvaList.get(i).getCourse_id();
+                StudentEntity studentPart = studentMapper.selectByPrimaryKey(stu_id);
+                TeacherEntity teacherPart = teacherMapper.selectByPrimaryKey(tea_id);
+                CourseEntity coursePart = courseMapper.selectByPrimaryKey(cou_id);
+                dto.setStuEvaluation(stuEvaList.get(i));
+                dto.setStudent(studentPart);
+                dto.setTeacher(teacherPart);
+                dto.setCourse(coursePart);
+
+                dtoList.add(dto);//把查出来的每个部分信息放进list
+            }
+        }
+        int count = stuEvaluationMapper.selectCountByExample(example);
+        map.put("data",dtoList);
+        map.put("count",count);
+        return map;
     }
 
     public courseTeacherDto queryStuEva(int userId, int courseId) {
@@ -62,7 +93,8 @@ public class StuEvaluationServiceImpl implements StuEvaluationService {
      * @param currentPage
      * @return
      */
-    public List<StuEvaluationDto> queryAllStuEva(int currentPage) {
+    public Map queryAllStuEva(int currentPage) {
+        Map map = new HashMap();
         List<StuEvaluationDto> dtoList = new ArrayList<>();
         Example example = new Example(StuEvaluationEntity.class);//通用mapper里的添加条件查询
         RowBounds rowBounds =new RowBounds((currentPage-1)*10,10);
@@ -85,7 +117,10 @@ public class StuEvaluationServiceImpl implements StuEvaluationService {
                 dtoList.add(dto);//把查出来的每个部分信息放进list
             }
         }
-        return dtoList;
+        int count = stuEvaluationMapper.selectCountByExample(example);
+        map.put("data",dtoList);
+        map.put("count",count);
+        return map;
     }
 
     public int addStuEva(StuEvaluationEntity stuEvaluation) {

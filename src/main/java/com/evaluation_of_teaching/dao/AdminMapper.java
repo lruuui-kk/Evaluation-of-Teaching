@@ -8,6 +8,7 @@ import tk.mybatis.mapper.common.Mapper;
 @org.apache.ibatis.annotations.Mapper
 @Repository
 public interface AdminMapper extends Mapper<AdminEntity> {
-    @Select("select * from admin where username = #{username}")
+    //admin是数据库关键字。。要括起来  太坑了......检查半天  `` '' ""
+    @Select("select * from `admin` where username = #{username}")
     AdminEntity getAdminByUsername(String username);
 }
